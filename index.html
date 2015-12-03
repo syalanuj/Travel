@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="campture">
+    <head>
+        <!--Map API Dependencies-->  
+        
+        <!--Parse Dependencies-->        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+        <!--<script type="text/javascript" src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>-->
+
+        <!--Template Dependencies-->
+        
+        <!-- GOOGLE FONTS -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600' rel='stylesheet' type='text/css'>
+        <!-- /GOOGLE FONTS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/icomoon.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/mystyles.css">
+        <link rel="stylesheet" href="css/dropzone.css">
+        <!--Post Form-->
+        <link rel="stylesheet" href="css/timeline/timestyle.css">
+        <!--Meta-->
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta name="keywords" content="Template, html, premium, themeforest" />
+        <meta name="description" content="Traveler - Premium template for travel companies">
+        <meta name="author" content="Tsoy">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <!--Dropzone dependencies-->
+        <script src="js/dropzone/dropzone.js"></script>
+        <!--Map API Dependencies-->
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+        <script src='js/lodash.js'></script>
+        <!-- Angular Dependencies -->
+        <!-- JS-->
+        <script src="js/angular.js"></script>
+        <script src="js/angular-route.min.js"></script>
+        <script src="js/angular-cookies.js"></script>
+        <script src="js/ui-bootstrap-tpls-0.14.3.js"></script>
+        <!--Timeline Dependencies-->
+        <!--Map API Dependencies-->
+        <script src='js/angular-simple-logger.js'></script>
+        <script src='js/angular-google-maps.min.js'></script>
+        <script src="js/ngAutocomplete/ngAutocomplete.js"></script>
+        <!--Drop zone directive-->
+        <script src="js/dropzone/dropzone-directive.js"></script>
+        <!--Angular Routing-->
+        <base href="/">
+        <!--Main-->
+        <script src="app.js"></script>
+        <!--Services-->
+        <script  src="app/services/tourService.js"></script>
+        <script  src="app/services/userService.js"></script>
+        <script  src="app/services/accountService.js"></script>
+        <script  src="app/services/tripService.js"></script>  
+        <script src="app/services/parse-angular/FacebookAngularPatch.js"></script>
+        <script src="app/services/parse-angular/ParseServices.js"></script>      
+        
+        <!--Directives-->
+        <script src="app/components/account/myProfile/profileWrapDirective.js"></script>
+
+        <!--Controller-->
+        <script  src="app/components/headerCtrl.js"></script>
+        <script  src="app/components/landing/landingCtrl.js"></script>
+        <script  src="app/components/tourDetails/tourDetailsCtrl.js"></script>
+        <script  src="app/components/mainCategories/mainCategoriesCtrl.js"></script>
+        <script  src="app/components/availableTours/availableToursCtrl.js"></script>
+        <script  src="app/components/account/accountCtrl.js"></script>
+        <script  src="app/components/account/timeline/timelineCtrl.js"></script>
+        <script  src="app/components/account/postTrip/postTripCtrl.js"></script>
+        <script  src="app/components/account/myProfile/myProfileCtrl.js"></script>
+        <script  src="app/components/account/editTrip/editTripCtrl.js"></script>
+
+        <!--Main Route-->
+        <script src="app.route.js"></script>
+        <script src="configMap.js"></script>
+        <script type="text/javascript">
+      (function(doc, script) {
+        var js, 
+            fjs = doc.getElementsByTagName(script)[0],
+            add = function(url, id) {
+                if (doc.getElementById(id)) {return;}
+                js = doc.createElement(script);
+                js.src = url;
+                id && (js.id = id);
+                fjs.parentNode.insertBefore(js, fjs);
+            };
+        // Facebook SDK
+        add('//connect.facebook.net/en_US/all.js', 'facebook-jssdk');
+        // Twitter SDK
+        add('//platform.twitter.com/widgets.js', 'twitter-wjs');
+      }(document, 'script'));
+    </script>
+        
+        <title>Campture_V1</title>
+    </head>
+    <body>
+    <div ng-controller="HeaderCtrl">
+                
+        <div id="fb-root"></div>
+        <div class="site-wrap">
+            <div class="header-wrap">
+                <div class="top-wrap">
+				    <div class="site-header container">
+					    <div class="header-logo left">
+						    <a href="#/"><img src="/img/icons/logo.png" alt=""></a>
+					    </div>
+					    <div class="header-options right clearfix">
+						    <nav class="header-menu left clearfix">
+							    <ul>								
+								    <li class=""><a href="/#/account/newsFeed/">News Feed</a></li>
+							    </ul>
+						    </nav>
+						    <div class="header-buttons clearfix">
+							    <a href="#" class="button opaque square menu mobile-visible-480">
+								    <span class="fa fa-bars"></span>
+								    <select name="page" class="element-select" data-change="redirect">
+									    <option value=""><a ng-href="/#/account/newsFeed/"></a>News Feed</option>
+								    </select>
+							    </a>
+							    <a ng-href="/#/account/signIn" ng-show="userObj == undefined" class="button opaque"><span class="mobile-hidden-320">Sign In</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
+							    <a ng-href="" ng-show="userObj" ng-click="logout()" class="button opaque"><span class="mobile-hidden-320">Sign Out</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
+							    <a ng-href="/#/account/myProfile/" ng-show="userObj" class="button">My Trips</a>
+						    </div>
+					    </div>
+			    	</div>
+			    </div>
+            </div>
+        </div>
+    </div>
+    <main>     
+    <div ng-view></div>
+    </main>
+
+  <footer id="main-footer">
+            <div class="container">
+                <div class="row row-wrap">
+                    <div class="col-md-3">
+                        <a class="logo" href="index.html">
+                            <img src="img/logo-invert.png" alt="Image Alternative text" title="Image Title" />
+                        </a>
+                        <p class="mb20">Booking, reviews and advices on hotels, resorts, flights, vacation rentals, travel packages, and lots more!</p>
+                        <ul class="list list-horizontal list-space">
+                            <li>
+                                <a class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-twitter box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-google-plus box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-linkedin box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                            <li>
+                                <a class="fa fa-pinterest box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>Newsletter</h4>
+                        <form>
+                            <label>Enter your E-mail Address</label>
+                            <input type="text" class="form-control">
+                            <p class="mt5"><small>*We Never Send Spam</small>
+                            </p>
+                            <input type="submit" class="btn btn-primary" value="Subscribe">
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <ul class="list list-footer">
+                            <li><a href="#">About US</a>
+                            </li>
+                            <li><a href="#">Press Centre</a>
+                            </li>
+                            <li><a href="#">Best Price Guarantee</a>
+                            </li>
+                            <li><a href="#">Travel News</a>
+                            </li>
+                            <li><a href="#">Jobs</a>
+                            </li>
+                            <li><a href="#">Privacy Policy</a>
+                            </li>
+                            <li><a href="#">Terms of Use</a>
+                            </li>
+                            <li><a href="#">Feedback</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Have Questions?</h4>
+                        <h4 class="text-color">+1-202-555-0173</h4>
+                        <h4><a href="#" class="text-color">support@traveler.com</a></h4>
+                        <p>24/7 Dedicated Customer Support</p>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <script src="js/modernizr.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/slimmenu.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="js/bootstrap-timepicker.js"></script>
+        <script src="js/nicescroll.js"></script>
+        <script src="js/dropit.js"></script>
+        <script src="js/ionrangeslider.js"></script>
+        <script src="js/icheck.js"></script>
+        <script src="js/fotorama.js"></script>        
+        <script src="js/typeahead.js"></script>
+        <script src="js/card-payment.js"></script>
+        <script src="js/magnific.js"></script>
+        <script src="js/owl-carousel.js"></script>
+        <script src="js/fitvids.js"></script>
+        <script src="js/tweet.js"></script>
+        <script src="js/countdown.js"></script>
+        <script src="js/gridrotator.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
+</html>

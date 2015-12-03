@@ -1,0 +1,85 @@
+<div class="intro-wrap">
+	<div class="site-intro container">
+		<h1>Share your travel experience</h1>
+		<p>Easily keep, publish and share travel itineraries, places and photos, join our travel community to discover travel ideas and get inspired.</p>
+		<a ng-show="userObj == undefined" ng-href="/#/account/signIn" class="button primary large"><img src="/img/icons/map.svg" alt=""> Publish Trip</a>
+        <a ng-show="userObj" ng-href="#/account/postTrip" class="button primary large"><img src="/img/icons/map.svg" alt=""> Publish Trip</a>
+	</div>
+</div>
+<div class="toolbar-wrap">
+	<div class="site-toolbar container">
+		<form action="/trips/">
+			<div class="row">
+				<div class="toolbar-options column span-4">					
+					<div class="select element-select" data-change="submit">
+						<span>All Countries</span>
+						<select id="id_country" name="country" style="opacity: 0;">
+							<option value="" selected="selected">All Countries</option>
+							<option value="armenia">Armenia</option>
+							<option value="austria">Austria</option>
+							<option value="azerbaijan">Azerbaijan</option>
+							<option value="belgium">Belgium</option>
+							<option value="czech-republic">Czech Republic</option>
+							<option value="dominican-republic">Dominican Republic</option>
+							<option value="estonia">Estonia</option>
+							<option value="france">France</option>
+							<option value="georgia">Georgia</option>
+							<option value="germany">Germany</option>
+							<option value="hungary">Hungary</option>
+							<option value="india">India</option>
+							<option value="italy">Italy</option>
+							<option value="malaysia">Malaysia</option>
+							<option value="morocco">Morocco</option>
+							<option value="netherlands">Netherlands</option>
+							<option value="poland">Poland</option>
+							<option value="russia">Russia</option>
+							<option value="spain">Spain</option>
+							<option value="sweden">Sweden</option>
+							<option value="ukraine">Ukraine</option>
+							<option value="united-arab-emirates">United Arab Emirates</option>
+							<option value="united-states">United States</option>
+						</select>
+					</div>
+				</div>
+				<div class="column span-4"></div>
+				<div class="column span-4">	
+					<div class="toolbar-search">						
+						<input type="text" ng-model="query[queryBy]" name="search" value="" class="element-autocomplete ui-autocomplete-input"  placeholder="Search" >
+						<a href="#" class="element-submit"><span class="fa fa-search"></span></a>	
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="content-wrap">
+<div class="site-content container">
+    <div id="pages" class="trips-grid row">
+        <div class="column span-4" ng-repeat="trip in allTrips | filter:query" >
+            <div class="trip-preview">	
+	            <div class="trip-image image element-image loaded">
+		            <a ng-href="#/account/timeline/{{trip.id}}">
+                        <img ng-show="trip.main_image" ng-src="{{trip.main_image.image_url}}" class="fullwidth" style="display: block;">
+		                <img ng-show="trip.main_image === undefined" ng-src="{{trip.visited_places[0].images[0].image_url}}" class="fullwidth" style="display: block;">
+                    </a>
+		
+		            <div class="trip-caption">
+			            <div class="trip-location">
+				            <span class="fa fa-map-marker"></span>
+				            {{trip.visited_places[0].location}}
+			            </div>
+		            </div>
+	            </div>
+	        <div class="trip-footer">
+		        <h3 class="trip-title title"><a ng-href="#/account/timeline/{{trip.id}}">{{trip.title}}</a></h3>
+		        <div class="trip-details clearfix">
+			        <div class="trip-detail left">
+				        <a href=""><span class="fa fa-user"></span> {{trip.username}}</a>
+			        </div>
+		        </div>
+	        </div>	
+        </div>
+        </div>
+    </div>
+</div>
+</div>

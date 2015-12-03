@@ -1,0 +1,152 @@
+<div class="title-wrap">
+	<div class="site-title container">
+		<h1 class="trip-title title">{{trip.title}}</h1>
+	</div>
+	<div ng-show="trip.main_image.image_url"class="title-background">
+    <img ng-src="{{trip.main_image.image_url}}" class="fullwidth" alt="" style="display: block;">
+    </div>
+</div>
+<div class="toolbar-wrap ">
+<div class="site-toolbar trip-toolbar container">
+		<div class="row">
+			<div class="column span-4 mobile-hidden-768">
+				<nav class="toolbar-menu">
+					<ul>
+						<li ng-click="updateTripTabPos(0)" ng-class="{ 'current': tripTabIndex == 0}"><a href="">Itinerary</a></li>
+						<li ng-click="updateTripTabPos(1)" ng-class="{ 'current': tripTabIndex == 1}"><a href="">Places</a></li>
+						<li ng-click="updateTripTabPos(2)" ng-class="{ 'current': tripTabIndex == 2}"><a href="">Photos</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="toolbar-details column span-4 mobile-span-6-768 mobile-span-12-380">
+				<div class="toolbar-detail">
+					<span class="fa fa-calendar"></span> {{trip.visited_places[0].date | date:"dd/MM/yyyy" }}&nbsp;&nbsp;
+					<span class="fa fa-map-marker"></span>
+					
+					<a href="">{{trip.visited_places[0].location}}</a>
+					
+				</div>
+			</div>
+            <div class="toolbar-options column span-4 mobile-span-6-768 mobile-span-12-380">
+                <a ng-show="trip.user.id == userObj.id" class="button secondary element-mobile" ng-href="/#/account/editTrip/{{trip.id}}">
+                    Edit
+                 </a>
+                <a ng-click="likeTrip()" href="" class="button switch primary element-ajax" ><span ng-click="likeTrip()"><span class="fa fa-heart"></span><span  class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> Like</span></span><span><span class="fa fa-heart-o"></span><span class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> Unlike</span></span><small id="favorites_number">{{trip.total_likes}}</small></a>
+            </div>
+            <div class="column span-12 mobile-visible-768">
+				<nav class="toolbar-menu">
+					<ul>
+						<li ng-click="updateTripTabPos(0)" ng-class="{ 'current': tripTabIndex == 0}"><a href="">Itinerary</a></li>
+						<li ng-click="updateTripTabPos(1)" ng-class="{ 'current': tripTabIndex == 1}"><a href="">Places</a></li>
+						<li ng-click="updateTripTabPos(2)" ng-class="{ 'current': tripTabIndex == 2}"><a href="">Photos</a></li>
+					</ul>
+				</nav>
+			</div>
+       </div>
+    </div>
+</div>
+<div ng-show="tripTabIndex == 0" class="site-content container">
+<div class="trip-full">
+    <div class="trip-note"><p>{{trip.introduction}}</p></div>    
+	<div class="trip-itinerary">			
+			<div class="itinerary-day" ng-repeat="place in trip.visited_places track by $index">
+				<div class="day-header">
+					<div class="day-location"><h2 class="title">{{place.location}}</h2></div>
+                    <div class="day-date">{{place.date | date:"dd/MM/yyyy" }}</div>						
+				</div>
+				<div class="day-note"><div class="day-overlay"></div><p>{{place.note}}</p></div>
+				<div class="day-photos clearfix columns-1" ng-repeat="image in place.images track by $index">								
+						<div class="day-photo">
+							<div class="photo-preview image element-image loaded">											
+								<a ng-href="{{image.image_url}}" class="element-colorbox cboxElement" data-id="photos" data-url="photo-418">								
+								    <img ng-src="{{image.image_url}}" class="fullwidth" alt="" style="display: block;">			
+								</a>
+							</div>
+						</div>		
+				</div>				
+			</div>
+		
+	</div>
+</div>
+</div>
+<div ng-show="tripTabIndex == 1" class="">
+    <div class="">
+        <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options">
+            <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible'
+                  geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable" icons='p.icons'>
+            </ui-gmap-polyline>            
+            <ui-gmap-markers models="allMarkers" coords="'self'" icon="'icon'"  options="marker.options" click="onClick()" events="marker.events">
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+    </div>
+ </div>
+<div ng-show="tripTabIndex == 2" class="site-content container">        
+    <div class="photos-grid row">
+        <div class="photos-header column span-12">
+		    <h2 class="photos-title title"><a href="/trip/376/brazil/">{{trip.title}}</a></h2>
+		    <div class="photos-details clearfix">
+			    <div class="photos-detail"><span class="fa fa-calendar"></span> {{trip.visited_places[0].date | date:"dd/MM/yyyy"}}</div>
+			    <div class="photos-detail">
+				    <span class="fa fa-map-marker"></span>
+				    <a href="">{{trip.visited_places[0].location}}</a> 
+                </div>
+		    </div>
+	    </div>
+            <div class="column span-4" ng-repeat="place in trip.visited_places">
+                <div  ng-repeat="placeImage in place.images">
+                    <div class="photo-preview image element-image loaded">
+	                    <a ng-href="{{placeImage.image_url}}" class="element-colorbox cboxElement" data-id="photos" data-title="">
+		                        <img ng-src="{{placeImage.image_url}}" class="fullwidth" alt="" style="display: block;">
+		                </a>
+                    </div>
+	            </div>
+            </div>
+        </div>
+    </div>
+<div class="comments-wrap" id="comments">
+	<div class="comments container">
+		<ul>
+            <li ng-repeat="comment in tripComments">
+            	<div class="comment">
+            		<div class="comment-author">
+            			<div class="comment-image">
+            				<a href="">            				
+            				<img ng-src="{{comment.user_pointer.facebook_profile.picture.data.url}}" class="fullwidth" alt="niekbokkers">            				
+            				</a>
+            			</div>
+            			
+            		</div>
+            		<div class="comment-details">
+            			<div class="comment-header clearfix">
+            				<h4 class="comment-title title"><a href="">{{comment.user_pointer.facebook_profile.name}}</a></h4>
+            				<div class="comment-date">{{comment.updatedAt | date:"dd/MM/yyyy"}}</div>									
+            			</div>
+            			<div class="comment-content"><p>{{comment.text}}</p></div>									
+            		</div>
+            	</div>	
+            </li>		
+			
+			<li id="comment_form">				
+				<div class="comment">
+					<div class="comment-author">
+						<div class="comment-image">
+							<a href="">			
+								<img ng-src="{{myProfile.picture.data.url}}" class="fullwidth" alt="">							
+							</a>
+						</div>
+					</div>
+					<div class="comment-details">						
+						<input type="hidden" name="csrfmiddlewaretoken" value="8dHF91RaYFb37HznGUIkOOlM7K9sxThs">
+						<div class="form-fields">
+							<textarea ng-model="myCommentText" cols="40" id="Textarea1" maxlength="1000" name="content" placeholder="Comment..." rows="3"></textarea>
+						</div>
+						<div class="form-footer clearfix">
+							<a ng-click="postComment()"href="" class="button primary element-submit">Add Comment</a>
+						</div>							
+					</div>
+				</div>
+				
+			</li>
+		</ul>	
+	</div>
+</div>
