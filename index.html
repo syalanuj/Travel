@@ -61,7 +61,7 @@
         <script src="app/services/parse-angular/ParseServices.js"></script>      
         
         <!--Directives-->
-        <script src="app/components/account/myProfile/profileWrapDirective.js"></script>
+        <script src="app/components/account/profile/profileWrapDirective.js"></script>
 
         <!--Controller-->
         <script  src="app/components/headerCtrl.js"></script>
@@ -72,7 +72,7 @@
         <script  src="app/components/account/accountCtrl.js"></script>
         <script  src="app/components/account/timeline/timelineCtrl.js"></script>
         <script  src="app/components/account/postTrip/postTripCtrl.js"></script>
-        <script  src="app/components/account/myProfile/myProfileCtrl.js"></script>
+        <script  src="app/components/account/profile/profileCtrl.js"></script>
         <script  src="app/components/account/editTrip/editTripCtrl.js"></script>
 
         <!--Main Route-->
@@ -124,7 +124,7 @@
 							    </a>
 							    <a ng-href="/#/account/signIn" ng-show="userObj == undefined" class="button opaque"><span class="mobile-hidden-320">Sign In</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
 							    <a ng-href="" ng-show="userObj" ng-click="logout()" class="button opaque"><span class="mobile-hidden-320">Sign Out</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
-							    <a ng-href="/#/account/myProfile/" ng-show="userObj" class="button">My Trips</a>
+							    <a ng-href="/#/account/profile/{{userObj.id}}" ng-show="userObj" class="button">My Trips</a>
 						    </div>
 					    </div>
 			    	</div>

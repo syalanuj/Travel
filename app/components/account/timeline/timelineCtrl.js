@@ -7,14 +7,19 @@
         //====== Scope Variables==========
         //================================
         $routeParams.tripId;
-        $scope.userObj = Parse.User.current();
-        $scope.myProfile = $scope.userObj.get("facebook_profile");
+        $scope.currentUserObj = Parse.User.current();
+        $scope.userObj;
+        $scope.myProfile = $scope.currentUserObj.get("facebook_profile");
         $scope.tripTabIndex = 0;
         $scope.allMarkers = new Array();
-
+        $scope.isMyProfile = false;
 
         accountService.getTripById($routeParams.tripId, function (data) {
             $scope.$apply(function () {
+                $scope.userObj = data.user
+                 if ($scope.userObj.id == $scope.currentUserObj.id) {
+                            $scope.isMyProfile = true;
+                    }  
                 $scope.trip = data;
                 var markerId = 0;
                 angular.forEach($scope.trip.visited_places, function (place, key) {
@@ -55,7 +60,7 @@
                 trip_pointer: $routeParams.tripId,
                 user_pointer: $scope.userObj.id
             }
-            tripService.tripLike($scope.trip.total_likes,likeObj, function (data) {
+            tripService.tripLike($scope.trip.total_likes, likeObj, function (data) {
                 if (data) {
                     var x = data;
                 }
@@ -117,5 +122,6 @@
             });
         }
         $scope.getTripComments();
+
     };
 })();

@@ -12,7 +12,8 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
         getMyTrips: getMyTrips,
         getAllTrips: getAllTrips,
         getMyProfile: getMyProfile,
-        updateUserFacebookProfile: updateUserFacebookProfile
+        updateUserFacebookProfile: updateUserFacebookProfile,
+        getUserById: getUserById
     };
 
     function getTripById(tripId, callback) {
@@ -36,6 +37,7 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
         trips.set("visited_places", tripDetails.visited_places);
         trips.set("total_likes", 0);
         trips.set("username", tripDetails.user.name);
+        trips.set("tags", tripDetails.tags)
         trips.set("user_pointer", {
             __type: "Pointer",
             className: "_User",
@@ -59,6 +61,7 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
         trips.set("introduction", tripDetails.introduction);
         trips.set("main_image", tripDetails.main_image);
         trips.set("visited_places", tripDetails.visited_places);
+        trips.set("tags", tripDetails.tags);
         trips.set("user_pointer", {
             __type: "Pointer",
             className: "_User",
@@ -127,7 +130,7 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
         return deferred.promise;
 
     };
-    function updateUserFacebookProfile(profile, userId,callback) {
+    function updateUserFacebookProfile(profile, userId, callback) {
         user.id = userId;
         user.set("facebook_profile", profile);
         user.save(null, {
@@ -139,6 +142,18 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
             }
         });
 
+    }
+    function getUserById(userId, callback) {
+        var query = new Parse.Query(user);
+        query.get(userId, {
+            success: function (parseObject) {
+                var userObj = JSON.parse(JSON.stringify(parseObject));
+                callback(userObj);
+            },
+            error: function (object, error) {
+                // The object was not retrieved successfully.
+            }
+        });
     }
     //Internal
     function getTripFromParse(parseObject) {
@@ -154,9 +169,11 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
             total_likes: parseObject.get("total_likes"),
             user: {
                 id: parseObject.get("user_pointer").id,
-                authData: parseObject.get("user_pointer").get("authData")
+                authData: parseObject.get("user_pointer").get("authData"),
+                facebook_profile: parseObject.get("user_pointer").get("facebook_profile")
             },
-            username: parseObject.get("username")
+            username: parseObject.get("username"),
+            tags: parseObject.get("tags")
         }
         return trip;
     };

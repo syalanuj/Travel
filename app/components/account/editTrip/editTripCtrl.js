@@ -114,6 +114,11 @@
 
         $scope.updateTrip = function () {
             $scope.newTrip.visited_places = $scope.places;
+            $scope.newTrip.tags = new Array();
+            var tags = $scope.tags.split(',');
+            angular.forEach(tags, function (value, key) {
+                $scope.newTrip.tags.push(value.trim());
+            });
             accountService.updateTrip($scope.newTrip, function (data) {
                 $scope.$apply(function () {
                     if (data) {

@@ -4,17 +4,19 @@ app.factory('TripService', ['$http', function ($http) {
     var Trips = Parse.Object.extend("Trips");
     var Comments = Parse.Object.extend("Comments");
     var Likes = Parse.Object.extend("Likes");
+    var Tag = Parse.Object.extend("Tag");
 
     var user = new User();
     var trips = new Trips();
     var comments = new Comments();
     var likes = new Likes();
-
+    var tag = new Tag();
     return {
         postComment: postComment,
         getTripComments: getTripComments,
         tripLike: tripLike,
         tripUnlike: tripUnlike
+
     };
 
     function postComment(myComment, callback) {
@@ -57,10 +59,10 @@ app.factory('TripService', ['$http', function ($http) {
                 // The object was not retrieved successfully.
             }
         });
-    }
+    };
 
 
-    function tripLike(likesCounter,likeObj, callback) {
+    function tripLike(likesCounter, likeObj, callback) {
         likes.set("trip_pointer", {
             __type: "Pointer",
             className: "Trips",
@@ -77,13 +79,12 @@ app.factory('TripService', ['$http', function ($http) {
                 trips.set("total_likes", likesCounter);
                 trips.save(null, {
                     success: function (parseObject) {
-                    callback(parseObject.id);
+                        callback(parseObject.id);
                     },
                     error: function (gameScore, error) {
-                    alert('Failed to create new object, with error code: ' + error.message);
+                        alert('Failed to create new object, with error code: ' + error.message);
                     }
                 });
-                callback(parseObject.id);
             },
             error: function (gameScore, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
@@ -113,4 +114,5 @@ app.factory('TripService', ['$http', function ($http) {
             }
         });
     }
+
 } ]);

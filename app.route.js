@@ -42,9 +42,9 @@
             controller: 'AccountCtrl',
             templateUrl: 'app/components/account/newsFeed.html'
         })
-        .when('/account/myProfile/', {
-            controller: 'MyProfileCtrl',
-            templateUrl: 'app/components/account/myProfile/myTrips.html'
+        .when('/account/profile/:userId', {
+            controller: 'ProfileCtrl',
+            templateUrl: 'app/components/account/profile/profile.html'
         })
         .when('/account/signIn/', {
             templateUrl: 'app/components/account/signIn.html'

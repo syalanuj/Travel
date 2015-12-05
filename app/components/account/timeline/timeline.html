@@ -1,3 +1,4 @@
+<div profile-wrap user="userObj" files=""></div>
 <div class="title-wrap">
 	<div class="site-title container">
 		<h1 class="trip-title title">{{trip.title}}</h1>
@@ -28,7 +29,7 @@
 				</div>
 			</div>
             <div class="toolbar-options column span-4 mobile-span-6-768 mobile-span-12-380">
-                <a ng-show="trip.user.id == userObj.id" class="button secondary element-mobile" ng-href="/#/account/editTrip/{{trip.id}}">
+                <a ng-show="isMyProfile" class="button secondary element-mobile" ng-href="/#/account/editTrip/{{trip.id}}">
                     Edit
                  </a>
                 <a ng-click="likeTrip()" href="" class="button switch primary element-ajax" ><span ng-click="likeTrip()"><span class="fa fa-heart"></span><span  class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> Like</span></span><span><span class="fa fa-heart-o"></span><span class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> Unlike</span></span><small id="favorites_number">{{trip.total_likes}}</small></a>
@@ -47,7 +48,8 @@
 </div>
 <div ng-show="tripTabIndex == 0" class="site-content container">
 <div class="trip-full">
-    <div class="trip-note"><p>{{trip.introduction}}</p></div>    
+    <div class="trip-note"><p>{{trip.introduction}}</p></div>
+    <div class="trip-note"><p>Tags: {{trip.tags}}</p></div>    
 	<div class="trip-itinerary">			
 			<div class="itinerary-day" ng-repeat="place in trip.visited_places track by $index">
 				<div class="day-header">
@@ -92,8 +94,8 @@
                 </div>
 		    </div>
 	    </div>
-            <div class="column span-4" ng-repeat="place in trip.visited_places">
-                <div  ng-repeat="placeImage in place.images">
+            <div class="column span-4" ng-repeat="place in trip.visited_places track by $index">
+                <div  ng-repeat="placeImage in place.images track by $index">
                     <div class="photo-preview image element-image loaded">
 	                    <a ng-href="{{placeImage.image_url}}" class="element-colorbox cboxElement" data-id="photos" data-title="">
 		                        <img ng-src="{{placeImage.image_url}}" class="fullwidth" alt="" style="display: block;">

@@ -10,7 +10,7 @@
                 Parse.FacebookUtils.init({
 
                     // pro-tip: swap App ID out for PROD App ID automatically on deploy using grunt-replace
-                    appId: 933421053397857, // Facebook App ID //test1:933421053397857 test2: 1672690479656185 
+                    appId: 1672690479656185, // Facebook App ID //test1:933421053397857 test2: 1672690479656185 
                     channelUrl: 'js/facebook/channel.html', // Channel File
                     cookie: true, // enable cookies to allow Parse to access the session
                     xfbml: true, // parse XFBML

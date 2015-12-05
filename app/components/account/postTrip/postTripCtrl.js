@@ -7,7 +7,8 @@
         //====== Scope Variables==========
         //================================
 
-        $scope.userObj = JSON.parse(JSON.stringify(Parse.User.current()))
+        $scope.userObj = JSON.parse(JSON.stringify(Parse.User.current()));
+        $scope.userObj.id = $scope.userObj.objectId;
         $scope.details = function (details) {
             $scope.places[$scope.pIndex].coordinates = { latitude: details.geometry.location.lat(), longitude: details.geometry.location.lng() };
             $scope.places[$scope.pIndex].locationDetails = details
@@ -23,6 +24,9 @@
         //$scope.place = new Object();
         $scope.newplaces = [0];
         $scope.places[$scope.newplaces.length - 1] = { images: new Array() };
+        $scope.queuecomplete = 0;
+        $scope.imageUploadDone = false;
+        $scope.isPublishedClicked = false;
         //Date functions
         $scope.status = {
             opened: false
@@ -44,28 +48,39 @@
         $scope.addPlace = function () {
             $scope.newplaces.push($scope.newplaces.length);
             $scope.places[$scope.newplaces.length - 1] = { images: new Array() };
+            $scope.$apply();
         };
         $scope.removePlace = function () {
             $scope.newplaces.pop();
         };
 
         $scope.postTrip = function () {
-            $scope.newTrip.visited_places = $scope.places;
-            $scope.newTrip.user = {
-                id: $scope.userObj.objectId,
-                name: $scope.userObj.facebook_profile.name
-            }
-            $scope.newTrip.posted_on = new Date();
-            accountService.postTrip($scope.newTrip, function (data) {
-                $scope.$apply(function () {
-                    if (data) {
-                        $scope.newplaces = [1];
-                        $scope.newTrip = undefined;
-                        $scope.places = undefined;
-                        $location.path('/account/timeline/'+data);
-                    }
+            $scope.isPublishedClicked = true;
+            if ($scope.imageUploadDone) {
+                $scope.newTrip.visited_places = $scope.places;
+                $scope.newTrip.user = {
+                    id: $scope.userObj.objectId,
+                    name: $scope.userObj.facebook_profile.name
+                }
+                $scope.newTrip.posted_on = new Date();
+                $scope.newTrip.tags = new Array();
+                if ($scope.tags) {
+                    var tags = $scope.tags.split(',');
+                    angular.forEach(tags, function (value, key) {
+                        $scope.newTrip.tags.push(value.trim());
+                    });
+                }
+                accountService.postTrip($scope.newTrip, function (data) {
+                    $scope.$apply(function () {
+                        if (data) {
+                            $scope.newplaces = [1];
+                            $scope.newTrip = undefined;
+                            $scope.places = undefined;
+                            $location.path('/account/timeline/' + data);
+                        }
+                    });
                 });
-            });
+            }
         };
         $scope.dropzoneConfig = {
             'options': { // passed into the Dropzone constructor
@@ -88,6 +103,13 @@
                     $scope.places[file.placeIndex].images.push({ image_url: response.url });
                 },
                 'removedfile': function (file, response) {
+                },
+                'queuecomplete': function (file, response) {
+                    $scope.queuecomplete++;
+                    if ($scope.newplaces.length == $scope.queuecomplete) {
+                        $scope.imageUploadDone = true;
+                        $scope.$apply();
+                    }
                 }
             }
         };
