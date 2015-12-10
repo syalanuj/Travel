@@ -3,10 +3,13 @@
 	<div class="site-title container">
 		<h1 class="trip-title title">{{trip.title}}</h1>
 	</div>
-	<div ng-show="trip.main_image.image_url"class="title-background">
-    <img ng-src="{{trip.main_image.image_url}}" class="fullwidth" alt="" style="display: block;">
+	<div class="title-background">
+        <img ng-show="trip.main_image" ng-src="{{trip.main_image.image_url}}" class="fullwidth" alt="" style="display: block;">
+        <img ng-show="trip.main_image === undefined" ng-src="{{trip.visited_places[0].images[0].image_url}}" class="fullwidth" style="display: block;">
     </div>
 </div>
+<modal-dialog image-url="modalImageUrl" show='modalShown' width='750px' height='60%'>                            
+</modal-dialog>
 <div class="toolbar-wrap ">
 <div class="site-toolbar trip-toolbar container">
 		<div class="row">
@@ -32,7 +35,23 @@
                 <a ng-show="isMyProfile" class="button secondary element-mobile" ng-href="/#/account/editTrip/{{trip.id}}">
                     Edit
                  </a>
-                <a ng-click="likeTrip()" href="" class="button switch primary element-ajax" ><span ng-click="likeTrip()"><span class="fa fa-heart"></span><span  class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> Like</span></span><span><span class="fa fa-heart-o"></span><span class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> Unlike</span></span><small id="favorites_number">{{trip.total_likes}}</small></a>
+                <a ng-show="currentUserObj" ng-click="tripLikeUnlike()" href="" class="button switch primary element-ajax" >
+                    <span ng-show="likeId == undefined">
+                        <span class="fa fa-heart">
+                        </span>
+                        <span  class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> 
+                            Like
+                        </span>
+                    </span>
+                    <span ng-show="likeId != undefined" >
+                        <span class="fa fa-heart-o">
+                        </span>
+                        <span class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320">
+                            Unlike
+                        </span>
+                    </span>
+                    <small id="favorites_number">{{trip.total_likes}}</small>
+                </a>
             </div>
             <div class="column span-12 mobile-visible-768">
 				<nav class="toolbar-menu">
@@ -48,28 +67,27 @@
 </div>
 <div ng-show="tripTabIndex == 0" class="site-content container">
 <div class="trip-full">
-    <div class="trip-note"><p>{{trip.introduction}}</p></div>
-    <div class="trip-note"><p>Tags: {{trip.tags}}</p></div>    
-	<div class="trip-itinerary">			
+    <div class="trip-note"><p>{{trip.introduction}}</p></div>    
+	    <div class="trip-itinerary">			
 			<div class="itinerary-day" ng-repeat="place in trip.visited_places track by $index">
 				<div class="day-header">
 					<div class="day-location"><h2 class="title">{{place.location}}</h2></div>
                     <div class="day-date">{{place.date | date:"dd/MM/yyyy" }}</div>						
 				</div>
-				<div class="day-note"><div class="day-overlay"></div><p>{{place.note}}</p></div>
-				<div class="day-photos clearfix columns-1" ng-repeat="image in place.images track by $index">								
-						<div class="day-photo">
+				<div class="day-note"><div class="day-overlay"></div><p>{{place.note}}</p></div>                        
+				<div class="day-photos clearfix columns-1" ng-repeat="image in place.images track by $index">					
+                    <div class="day-photo">
 							<div class="photo-preview image element-image loaded">											
-								<a ng-href="{{image.image_url}}" class="element-colorbox cboxElement" data-id="photos" data-url="photo-418">								
+								<a href="" ng-click='toggleModal(image.image_url)' class="element-colorbox cboxElement" data-id="photos" data-url="photo-418">								
 								    <img ng-src="{{image.image_url}}" class="fullwidth" alt="" style="display: block;">			
 								</a>
 							</div>
 						</div>		
 				</div>				
-			</div>
-		
-	</div>
-</div>
+			</div>		
+	    </div>
+        <div class="trip-note"><p>Tags: {{trip.tags}}</p></div>
+    </div>
 </div>
 <div ng-show="tripTabIndex == 1" class="">
     <div class="">
@@ -94,61 +112,21 @@
                 </div>
 		    </div>
 	    </div>
-            <div class="column span-4" ng-repeat="place in trip.visited_places track by $index">
-                <div  ng-repeat="placeImage in place.images track by $index">
-                    <div class="photo-preview image element-image loaded">
-	                    <a ng-href="{{placeImage.image_url}}" class="element-colorbox cboxElement" data-id="photos" data-title="">
-		                        <img ng-src="{{placeImage.image_url}}" class="fullwidth" alt="" style="display: block;">
-		                </a>
-                    </div>
-	            </div>
+            <div class="column span-4" ng-repeat="placeImage in timelineImages track by $index">
+                <div class="photo-preview image element-image loaded">
+	                <a href="" ng-click='toggleModal(placeImage.image_url)' class="element-colorbox cboxElement" data-id="photos" data-title="">
+		                <img ng-src="{{placeImage.image_url}}" class="fullwidth" alt="" style="display: block;">
+		            </a>
+                </div>
             </div>
         </div>
     </div>
 <div class="comments-wrap" id="comments">
 	<div class="comments container">
-		<ul>
-            <li ng-repeat="comment in tripComments">
-            	<div class="comment">
-            		<div class="comment-author">
-            			<div class="comment-image">
-            				<a href="">            				
-            				<img ng-src="{{comment.user_pointer.facebook_profile.picture.data.url}}" class="fullwidth" alt="niekbokkers">            				
-            				</a>
-            			</div>
-            			
-            		</div>
-            		<div class="comment-details">
-            			<div class="comment-header clearfix">
-            				<h4 class="comment-title title"><a href="">{{comment.user_pointer.facebook_profile.name}}</a></h4>
-            				<div class="comment-date">{{comment.updatedAt | date:"dd/MM/yyyy"}}</div>									
-            			</div>
-            			<div class="comment-content"><p>{{comment.text}}</p></div>									
-            		</div>
-            	</div>	
-            </li>		
-			
-			<li id="comment_form">				
-				<div class="comment">
-					<div class="comment-author">
-						<div class="comment-image">
-							<a href="">			
-								<img ng-src="{{myProfile.picture.data.url}}" class="fullwidth" alt="">							
-							</a>
-						</div>
-					</div>
-					<div class="comment-details">						
-						<input type="hidden" name="csrfmiddlewaretoken" value="8dHF91RaYFb37HznGUIkOOlM7K9sxThs">
-						<div class="form-fields">
-							<textarea ng-model="myCommentText" cols="40" id="Textarea1" maxlength="1000" name="content" placeholder="Comment..." rows="3"></textarea>
-						</div>
-						<div class="form-footer clearfix">
-							<a ng-click="postComment()"href="" class="button primary element-submit">Add Comment</a>
-						</div>							
-					</div>
-				</div>
-				
-			</li>
-		</ul>	
+        <div id="fb-comment-box" dynamic-fb-comment-box
+            page-href="{{pageUrl}}"
+            numposts="5"
+            colorscheme="light">
+        </div>    	
 	</div>
 </div>

@@ -15,8 +15,8 @@ app.factory('TripService', ['$http', function ($http) {
         postComment: postComment,
         getTripComments: getTripComments,
         tripLike: tripLike,
-        tripUnlike: tripUnlike
-
+        tripUnlike: tripUnlike,
+        isTripLikedByUser: isTripLikedByUser
     };
 
     function postComment(myComment, callback) {
@@ -92,25 +92,43 @@ app.factory('TripService', ['$http', function ($http) {
         });
     }
 
-    function tripUnlike(likeObj, callback) {
-        likes.set("trip_pointer", {
-            __type: "Pointer",
-            className: "Trips",
-            objectId: likeObj.trip_pointer
-        });
-        likes.set("user_pointer", {
-            __type: "Pointer",
-            className: "_User",
-            objectId: likeObj.user_pointer
-        });
+    function tripUnlike(likeId, callback) {
+        likes.id = likeId;
         likes.destroy({
             success: function (parseObject) {
-                trips.increment("total_likes");
+                trips.decrement("total_likes");
                 trips.save();
                 callback(parseObject.id);
             },
             error: function (myObject, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
+            }
+        });
+    }
+
+    function isTripLikedByUser(likeObj, callback) {
+        var query = new Parse.Query(likes);
+        query.equalTo("trip_pointer", {
+            __type: "Pointer",
+            className: "Trips",
+            objectId: likeObj.trip_pointer
+        });
+        query.equalTo("user_pointer", {
+            __type: "Pointer",
+            className: "_User",
+            objectId: likeObj.user_pointer
+        });
+        query.find({
+            success: function (parseObject) {
+                if (parseObject.length > 0) {
+                    callback(parseObject[0].id);
+                }
+                else {
+                    callback(undefined);
+                }
+            },
+            error: function (object, error) {
+                // The object was not retrieved successfully.
             }
         });
     }

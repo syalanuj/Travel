@@ -15,7 +15,6 @@
         };
         $scope.getPlaceIndex = function (pindex) {
             $scope.pIndex = pindex;
-
         }
         $scope.details;
         $scope.newTrip = new Object();
@@ -42,13 +41,13 @@
             formatYear: 'yy',
             startingDay: 1
         };
+        $scope.collapseStatus = true;
         $scope.validatePlaceHeading = function () {
 
         };
         $scope.addPlace = function () {
             $scope.newplaces.push($scope.newplaces.length);
             $scope.places[$scope.newplaces.length - 1] = { images: new Array() };
-            $scope.$apply();
         };
         $scope.removePlace = function () {
             $scope.newplaces.pop();
@@ -138,6 +137,20 @@
         };
         $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
+        };
+
+        $scope.uploadMainImage = function (file) {
+            //ng-model="newTrip.main_image.image_url"
+        }
+
+        $scope.removeGroup = function (idx, e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            $scope.newplaces.splice(idx, 1);
+            $scope.places.splice(idx, 1)
         };
     };
 })();

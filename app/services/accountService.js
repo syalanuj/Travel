@@ -18,6 +18,7 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
 
     function getTripById(tripId, callback) {
         var query = new Parse.Query(trips);
+        query.include("user_pointer");
         query.get(tripId, {
             success: function (parseObject) {
                 var trip = getTripFromParse(parseObject);
@@ -147,7 +148,12 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
         var query = new Parse.Query(user);
         query.get(userId, {
             success: function (parseObject) {
-                var userObj = JSON.parse(JSON.stringify(parseObject));
+                var userObj = {
+                    id: parseObject.id,
+                    authData: parseObject.get("authData"),
+                    facebook_profile: parseObject.get("facebook_profile")
+                };
+
                 callback(userObj);
             },
             error: function (object, error) {
@@ -155,6 +161,8 @@ app.factory('AccountService', ['$http', '$q', function ($http, $q) {
             }
         });
     }
+
+
     //Internal
     function getTripFromParse(parseObject) {
         var trip = {

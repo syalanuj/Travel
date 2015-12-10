@@ -45,7 +45,7 @@
 		        <h3 class="trip-title title"><a ng-href="#/account/timeline/{{trip.id}}">{{trip.title}}</a></h3>
 		        <div class="trip-details clearfix">
 			        <div class="trip-detail left">
-				        <a href=""><span class="fa fa-user"></span> {{trip.username}}</a>
+				        <a ng-href="/account/profile/{{trip.user.id}}"><span class="fa fa-user"></span> {{trip.username}}</a>
 			        </div>
 		        </div>
 	        </div>	
