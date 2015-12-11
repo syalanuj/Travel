@@ -2,8 +2,8 @@
     'use strict';
 
     var app = angular.module('campture');
-    app.controller('TimelineCtrl', ['$scope', '$cookies', '$rootScope', '$routeParams', '$location', 'uiGmapIsReady', 'AccountService', 'TripService', '$timeout', controller]);
-    function controller($scope, $cookies, $rootScope, $routeParams, $location, uiGmapIsReady, accountService, tripService, $timeout) {
+    app.controller('TimelineCtrl', ['$scope', '$cookies', '$rootScope', '$routeParams', '$location', 'uiGmapIsReady', 'AccountService', 'TripService', '$timeout', 'uiGmapGoogleMapApi', controller]);
+    function controller($scope, $cookies, $rootScope, $routeParams, $location, uiGmapIsReady, accountService, tripService, $timeout, uiGmapGoogleMapApi) {
         //====== Scope Variables==========
         //================================
         $routeParams.tripId;
@@ -30,11 +30,31 @@
                 }
                 $scope.trip = data;
                 var markerId = 0;
+
                 angular.forEach($scope.trip.visited_places, function (place, key) {
                     $scope.allMarkers.push({ latitude: place.coordinates.latitude, longitude: place.coordinates.longitude, title: place.location, id: markerId })
                     markerId++;
                 });
-                $scope.map = { center: { latitude: $scope.allMarkers[0].latitude, longitude: $scope.allMarkers[0].longitude }, zoom: 15 };
+
+                var bounds = new google.maps.LatLngBounds();
+                for (var i = 0;i < $scope.allMarkers.length;i++) {
+                    if(Number(i) != NaN) {
+                        try{
+                            bounds.extend(new google.maps.LatLng($scope.allMarkers[i].latitude,
+                                $scope.allMarkers[i].longitude));// your marker position, must be a LatLng instance
+                        } catch (e){
+                            console.log(e);
+                        }
+                    }
+                }
+
+                var centerLat = bounds.getCenter().lat();
+                var centerLng = bounds.getCenter().lng();
+
+                console.log("center: " + centerLat + ',' + centerLng);
+                $scope.map = { center: { latitude: centerLat, longitude: centerLng }, zoom: 5 };
+
+
                 $scope.polylines = [
                     {
                         id: 1,
@@ -77,7 +97,7 @@
             }
         }
         //Map
-        $scope.map = { center: { latitude: 21.0000, longitude: 78.0000 }, zoom: 4 };
+//        $scope.map = { center: { latitude: 21.0000, longitude: 78.0000 }, zoom: 4 };
 
 
         //Comments and Likes
