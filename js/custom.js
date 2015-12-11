@@ -335,7 +335,7 @@ if ($('#map-canvas').length) {
 
 
 $('.card-select > li').click(function() {
-    self = this;
+    var self = this;
     $(self).addClass('card-item-selected');
     $(self).siblings('li').removeClass('card-item-selected');
     $('.form-group-cc-number input').click(function() {

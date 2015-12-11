@@ -35,7 +35,7 @@
                     $location.path("/");
                 },
                 error: function (user, error) {
-                    alert("Cancelled");
+                    console.log("Cancelled");
                 }
             });
         };

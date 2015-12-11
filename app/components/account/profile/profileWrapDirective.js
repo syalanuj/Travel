@@ -28,6 +28,10 @@
                 
                 $scope.updateprofileTabPos = function (pos) {
                     $rootScope.profileTabPos = pos;
+                    if(!$scope.userObj || !$scope.userObj.id) {
+                        $scope.userObj = JSON.parse(JSON.stringify(Parse.User.current()));
+                        $scope.userObj.id = $scope.userObj.objectId;
+                    }
                     $location.path('/account/profile/' + $scope.userObj.id);
                 }
 
