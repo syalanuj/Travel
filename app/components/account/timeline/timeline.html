@@ -35,22 +35,23 @@
                 <a ng-show="isMyProfile" class="button secondary element-mobile" ng-href="/#/account/editTrip/{{trip.id}}">
                     Edit
                  </a>
-                <a ng-show="currentUserObj" ng-click="tripLikeUnlike()" href="" class="button switch primary element-ajax" >
-                    <span ng-show="likeId == undefined">
+                <a ng-click="tripLikeUnlike()" href="" class="button switch primary element-ajax" >
+                    <div ng-show="likeId == undefined">
                         <span class="fa fa-heart">
                         </span>
                         <span  class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320"> 
                             Like
                         </span>
-                    </span>
-                    <span ng-show="likeId != undefined" >
+                        <small id="favorites_number">{{trip.total_likes}}</small>
+                    </div>
+                    <div ng-show="likeId">
                         <span class="fa fa-heart-o">
                         </span>
                         <span class="mobile-visible-1040 mobile-hidden-768 mobile-visible-320">
                             Unlike
                         </span>
-                    </span>
-                    <small id="favorites_number">{{trip.total_likes}}</small>
+                        <small id="favorites_number">{{trip.total_likes}}</small>
+                    </div>
                 </a>
             </div>
             <div class="column span-12 mobile-visible-768">

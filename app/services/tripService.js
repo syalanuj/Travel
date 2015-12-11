@@ -63,6 +63,7 @@ app.factory('TripService', ['$http', function ($http) {
 
 
     function tripLike(likesCounter, likeObj, callback) {
+        var likes = new Likes();
         likes.set("trip_pointer", {
             __type: "Pointer",
             className: "Trips",
@@ -92,13 +93,20 @@ app.factory('TripService', ['$http', function ($http) {
         });
     }
 
-    function tripUnlike(likeId, callback) {
+    function tripUnlike(likeId, tripId,total_likes, callback) {
         likes.id = likeId;
         likes.destroy({
             success: function (parseObject) {
-                trips.decrement("total_likes");
-                trips.save();
-                callback(parseObject.id);
+                trips.id = tripId;
+                trips.set("total_likes", total_likes);
+                trips.save(null, {
+                    success: function (parseObject) {
+                        callback(parseObject.id);
+                    },
+                    error: function (gameScore, error) {
+                        alert('Failed to create new object, with error code: ' + error.message);
+                    }
+                });
             },
             error: function (myObject, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
