@@ -133,6 +133,7 @@
             tripService.isTripLikedByUser(likeObj, function (data) {
                 if (data) {
                     $scope.likeId = data;
+                    $scope.$apply();
                 }
             })
         }
@@ -154,9 +155,11 @@
         };
         $scope.unlikeTrip = function () {
             $scope.trip.total_likes--;
-            tripService.tripUnlike($scope.likeId, function (data) {
+            tripService.tripUnlike($scope.likeId, $routeParams.tripId, $scope.trip.total_likes, function (data) {
                 if (data) {
                     var x = data;
+                    $scope.likeId = undefined;
+                    $scope.$apply();
                 }
                 else {
                     $scope.trip.total_likes++;
