@@ -15,10 +15,11 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600' rel='stylesheet' type='text/css'>
         <!-- /GOOGLE FONTS -->
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/mystyles.css">
         <link rel="stylesheet" href="css/dropzone.css">
         <!--Post Form-->
@@ -35,7 +36,7 @@
         <!--Dropzone dependencies-->
         <script src="js/dropzone/dropzone.js"></script>
         <!--Map API Dependencies-->
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+        <script async defer type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
         <script src='js/lodash.js'></script>
         <!-- Angular Dependencies -->
         <!-- JS-->
@@ -84,7 +85,7 @@
         <script src="configMap.js"></script>
         <script type="text/javascript">
       (function(doc, script) {
-        var js, 
+        var js,
             fjs = doc.getElementsByTagName(script)[0],
             add = function(url, id) {
                 if (doc.getElementById(id)) {return;}
@@ -103,110 +104,235 @@
         <title>Campture_V1</title>
     </head>
     <body>
-    <div ng-controller="HeaderCtrl">
-                
-        <div id="fb-root"></div>
-        <div class="site-wrap">
-            <div class="header-wrap">
-                <div class="top-wrap">
-				    <div class="site-header container">
-					    <div class="header-logo left">
-						    <a href="#/"><img src="/img/icons/logo.png" alt=""></a>
-					    </div>
-					    <div class="header-options right clearfix">
-						    <nav class="header-menu left clearfix">
-							    <ul>								
-								    <li class=""><a href="/#/account/newsFeed/">News Feed</a></li>
-							    </ul>
-						    </nav>
-						    <div class="header-buttons clearfix">
-							    <a href="#" class="button opaque square menu mobile-visible-480">
-								    <span class="fa fa-bars"></span>
-								    <select name="page" class="element-select" data-change="redirect">
-									    <option value=""><a ng-href="/#/account/newsFeed/"></a>News Feed</option>
-								    </select>
-							    </a>
-							    <a ng-href="/#/account/signIn" ng-show="userObj == undefined" class="button opaque"><span class="mobile-hidden-320">Sign In</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
-							    <a ng-href="" ng-show="userObj" ng-click="logout()" class="button opaque"><span class="mobile-hidden-320">Sign Out</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
-							    <a ng-href="/#/account/profile/{{userObj.id}}" ng-show="userObj" class="button">My Trips</a>
-						    </div>
-					    </div>
-			    	</div>
-			    </div>
+    <header class="header home-img img-responsive">
+        <div ng-controller="HeaderCtrl">
+            <div id="fb-root"></div>
+            <div class="top-bar no-margin" style="padding:0;">
+                <div class="container">
+                    <div class="col-md-2 no-padding site-name">
+                        campture
+                    </div>
+                    <div class="col-md-6">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-left">
+                                <li><a class="active" href="">Explore</a></li>
+                                <li><a href="">Timeline</a></li>
+                                <li><a href="">Tags</a></li>
+                                <li><a href="">Profiles</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 myfeed">
+                        <a href="#"><img src="img/backgrounds/myfeed.png" alt="My Feed" class="feed img-responsive"></a>
+                    </div>
+
+                    <div class="col-md-2 profile">
+                        <!--<span class="profile-name">Juilliett</span>-->
+                        <!--<img class="profile-picture img-circle" src="images/pp.jpg" alt="Profile Picture" width="40" height="40">-->
+                        <!--<div class="element-form">-->
+                            <!--<a href="" ng-click="loginWithFacebook()" class="button facebook">-->
+                                <!--<span class="fa fa-facebook-square medium"></span> Sign in</a>-->
+                        <!--</div>-->
+                        <a ng-href="/#/account/signIn" ng-show="userObj == undefined" class="button">
+                            <span class="mobile-hidden-320">Sign In</span>
+                            <span class="mobile-visible-320">
+                                <span class="fa fa-sign-out square"></span></span></a>
+                        <a ng-href="" ng-show="userObj" ng-click="logout()" class="button">
+                            <span class="mobile-hidden-320">Sign Out</span>
+                            <span class="mobile-visible-320">
+                                <span class="fa fa-sign-out square"></span></span></a>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="site-wrap">-->
+                <!--<div class="header-wrap">-->
+                    <!--<div class="top-wrap">-->
+                        <!--<div class="site-header container">-->
+                            <!--<div class="header-logo left">-->
+                                <!--<a href="#/"><img src="/img/icons/logo.png" alt=""></a>-->
+                            <!--</div>-->
+                            <!--<div class="header-options right clearfix">-->
+                                <!--<nav class="header-menu left clearfix">-->
+                                    <!--<ul>-->
+                                        <!--<li class=""><a href="/#/account/newsFeed/">News Feed</a></li>-->
+                                    <!--</ul>-->
+                                <!--</nav>-->
+                                <!--<div class="header-buttons clearfix">-->
+                                    <!--<a href="#" class="button opaque square menu mobile-visible-480">-->
+                                        <!--<span class="fa fa-bars"></span>-->
+                                        <!--<select name="page" class="element-select" data-change="redirect">-->
+                                            <!--<option value=""><a ng-href="/#/account/newsFeed/"></a>News Feed</option>-->
+                                        <!--</select>-->
+                                    <!--</a>-->
+                                    <!--<a ng-href="/#/account/signIn" ng-show="userObj == undefined" class="button opaque"><span class="mobile-hidden-320">Sign In</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>-->
+                                    <!--<a ng-href="" ng-show="userObj" ng-click="logout()" class="button opaque"><span class="mobile-hidden-320">Sign Out</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>-->
+                                    <!--<a ng-href="/#/account/profile/{{userObj.id}}" ng-show="userObj" class="button">My Trips</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="intro-wrap">
+            <div class="site-intro container">
+                <h1>Share your travel experience</h1>
+                <p>Easily keep, publish and share travel itineraries, places and photos, join our travel community to discover travel ideas and get inspired.</p>
+                <a ng-show="userObj == undefined" ng-href="/#/account/signIn" class="button primary large"><img src="/img/icons/map.svg" alt=""> Publish Trip</a>
+                <a ng-show="userObj" ng-href="#/account/postTrip" class="button primary large"><img src="/img/icons/map.svg" alt=""> Publish Trip</a>
             </div>
         </div>
-    </div>
+        <div class="timeline-wrap hidden">
+            <div class="row no-margin">
+                <div class="container">
+                    <div class="col-md-4 profile-overview">
+                        <div class="col-md-3">
+                            <img class="profile-picture img-circle" src="{{currentObj.facebook_profile.picture.data.url}}"
+                                 alt="Profile Picture" width="50" height="50">
+                        </div>
+                        <div class="col-md-9">
+                            <h4>{{currentObj.facebook_profile.name}}</h4>
+                            <p><i class="fa fa-map-marker"></i> Paris, France<br>
+                                <i class="fa fa-location-arrow"></i> Places, 2057<br>
+                                <i class="fa fa-bookmark-o"></i> Trips 519 <br>
+                                <i class="fa fa-picture-o"></i> Photos 15,564
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 my-trip">
+                        <span>{{trip.title}}</span>
+                    </div>
+                    <div class="col-md-4 locaion">
+                        <i class="fa fa-square"></i> Zermatt, Switzerland
+                    </div>
+                </div>
+            </div>
+            <!--<div class="profile-preview ">-->
+                <!--<div class="profile-image">-->
+                    <!--<div class="photo-preview image element-image loaded">-->
+                        <!--<a href="">-->
+                            <!--<img ng-src="{{currentObj.facebook_profile.picture.data.url}}" class="fullwidth img-rounded" style="display: block;"></a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="profile-content">-->
+                    <!--<div class="profile-name title">{{currentObj.facebook_profile.name}}</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        </div>
+    </header>
     <main>     
     <div ng-view></div>
     </main>
 
-  <footer id="main-footer">
-            <div class="container">
-                <div class="row row-wrap">
-                    <div class="col-md-3">
-                        <a class="logo" href="index.html">
-                            <img src="img/logo-invert.png" alt="Image Alternative text" title="Image Title" />
-                        </a>
-                        <p class="mb20">Booking, reviews and advices on hotels, resorts, flights, vacation rentals, travel packages, and lots more!</p>
-                        <ul class="list list-horizontal list-space">
-                            <li>
-                                <a class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-twitter box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-google-plus box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-linkedin box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-pinterest box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                        </ul>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 footer-nav-worp-td">
+                    <div class="col-sm-3 footer-nav-worp-td">
+                        <h2>CAMPTURE</h2>
                     </div>
+                </div>
 
-                    <div class="col-md-3">
-                        <h4>Newsletter</h4>
-                        <form>
-                            <label>Enter your E-mail Address</label>
-                            <input type="text" class="form-control">
-                            <p class="mt5"><small>*We Never Send Spam</small>
-                            </p>
-                            <input type="submit" class="btn btn-primary" value="Subscribe">
-                        </form>
-                    </div>
-                    <div class="col-md-2">
-                        <ul class="list list-footer">
-                            <li><a href="#">About US</a>
-                            </li>
-                            <li><a href="#">Press Centre</a>
-                            </li>
-                            <li><a href="#">Best Price Guarantee</a>
-                            </li>
-                            <li><a href="#">Travel News</a>
-                            </li>
-                            <li><a href="#">Jobs</a>
-                            </li>
-                            <li><a href="#">Privacy Policy</a>
-                            </li>
-                            <li><a href="#">Terms of Use</a>
-                            </li>
-                            <li><a href="#">Feedback</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4">
-                        <h4>Have Questions?</h4>
-                        <h4 class="text-color">+1-202-555-0173</h4>
-                        <h4><a href="#" class="text-color">support@traveler.com</a></h4>
-                        <p>24/7 Dedicated Customer Support</p>
-                    </div>
+                <div class="col-sm-6 footer-nav-worp-menu">
+                    <ul class="">
+                        <li><a href="#">ABOUT US</a></li>
+                        <li><a href="#">PIRVACY</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">CONTACT US</a></li>
+                    </ul>
+                </div>
 
+                <div class="col-sm-3 footer-nav-worp-social">
+                    <ul class="">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+                    </ul>
                 </div>
             </div>
-        </footer>
+            <div class="row" style="text-align:center;color:#fff;">
+                <small>© 2015 All rights reserved. CAMPTURE</small>
+            </div>
+        </div>
+    </footer>
+
+  <!--<footer id="main-footer">-->
+            <!--<div class="container">-->
+                <!--<div class="row row-wrap">-->
+                    <!--<div class="col-md-3">-->
+                        <!--<a class="logo" href="index.html">-->
+                            <!--<img src="img/logo-invert.png" alt="Image Alternative text" title="Image Title" />-->
+                        <!--</a>-->
+                        <!--<p class="mb20">Booking, reviews and advices on hotels, resorts, flights, vacation rentals, travel packages, and lots more!</p>-->
+                        <!--<ul class="list list-horizontal list-space">-->
+                            <!--<li>-->
+                                <!--<a class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top" href="#"></a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="fa fa-twitter box-icon-normal round animate-icon-bottom-to-top" href="#"></a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="fa fa-google-plus box-icon-normal round animate-icon-bottom-to-top" href="#"></a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="fa fa-linkedin box-icon-normal round animate-icon-bottom-to-top" href="#"></a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="fa fa-pinterest box-icon-normal round animate-icon-bottom-to-top" href="#"></a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-md-3">-->
+                        <!--<h4>Newsletter</h4>-->
+                        <!--<form>-->
+                            <!--<label>Enter your E-mail Address</label>-->
+                            <!--<input type="text" class="form-control">-->
+                            <!--<p class="mt5"><small>*We Never Send Spam</small>-->
+                            <!--</p>-->
+                            <!--<input type="submit" class="btn btn-primary" value="Subscribe">-->
+                        <!--</form>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-2">-->
+                        <!--<ul class="list list-footer">-->
+                            <!--<li><a href="#">About US</a>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">Press Centre</a>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">Best Price Guarantee</a>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">Travel News</a>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">Jobs</a>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">Privacy Policy</a>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">Terms of Use</a>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">Feedback</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h4>Have Questions?</h4>-->
+                        <!--<h4 class="text-color">+1-202-555-0173</h4>-->
+                        <!--<h4><a href="#" class="text-color">support@traveler.com</a></h4>-->
+                        <!--<p>24/7 Dedicated Customer Support</p>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</div>-->
+        <!--</footer>-->
         <script src="js/modernizr.js"></script>
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.js"></script>

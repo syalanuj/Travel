@@ -4,6 +4,14 @@
     var app = angular.module('campture');
     app.controller('TimelineCtrl', ['$scope', '$cookies', '$rootScope', '$routeParams', '$location', 'uiGmapIsReady', 'AccountService', 'TripService', '$timeout', 'uiGmapGoogleMapApi', controller]);
     function controller($scope, $cookies, $rootScope, $routeParams, $location, uiGmapIsReady, accountService, tripService, $timeout, uiGmapGoogleMapApi) {
+        //Setting header
+        var header = $('header.home-img');
+        header.removeClass('home-img');
+        header.addClass('header-img');
+        $('.intro-wrap').hide();
+        $('.timeline-wrap.hidden').removeClass('hidden');
+        /*-----------*/
+
         //====== Scope Variables==========
         //================================
         $routeParams.tripId;
@@ -22,6 +30,7 @@
         accountService.getTripById($routeParams.tripId, function (data) {
             $scope.$apply(function () {
                 $scope.userObj = data.user
+                $rootScope.currentObj = data.user;
                 if ($scope.currentUserObj) {
                     $scope.isTripLikedByUser();
                     if ($scope.userObj.id == $scope.currentUserObj.id) {
@@ -29,6 +38,7 @@
                     }
                 }
                 $scope.trip = data;
+                $rootScope.trip = data;
                 var markerId = 0;
 
                 angular.forEach($scope.trip.visited_places, function (place, key) {

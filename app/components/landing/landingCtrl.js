@@ -15,6 +15,17 @@
         $scope.query = {};
         $scope.queryBy = '$';
 
+
+        //Setting header
+        var header = $('header.header-img');
+        if(header) {
+            header.removeClass('header-img');
+            header.addClass('home-img');
+            $('.intro-wrap').show();
+            $('.timeline-wrap').addClass('hidden');
+        }
+        /*-----------*/
+
         accountService.getAllTrips(function (data) {
             $scope.$apply(function () {
                 $scope.allTrips = data;

@@ -1,16 +1,26 @@
 (function () {
     'use strict';
 
-    var app = angular.module('campture');
+        var app = angular.module('campture');
 
-    app.controller('HeaderCtrl', ['$scope', '$cookies', '$rootScope', 'TourService', '$location', 'AccountService', controller]);
-    function controller($scope, $cookies, $rootScope, tourService, $location, accountService) {
+    app.controller('HeaderCtrl', ['$scope', '$cookies', '$rootScope', 'TourService', '$location', 'AccountService','$routeParams', controller]);
+    function controller($scope, $cookies, $rootScope, tourService, $location, accountService, $routeParams) {
         //====== Scope Variables==========
         //================================
         //$rootScope.travelStyles;
         //$rootScope.topStates;
         //$rootScope.activities;
+        $routeParams.tripId;
         $scope.userObj = Parse.User.current();
+
+//        $scope.$watch('$routeParams', function (newValue, oldValue) {
+//            accountService.getTripById($routeParams.tripId, function (data) {
+//                $scope.$apply(function () {
+//                    $scope.newObj = data.user;
+//                });
+//            });
+//        });
+
 
         $rootScope.loginWithFacebook = function () {
             Parse.FacebookUtils.logIn(null, {

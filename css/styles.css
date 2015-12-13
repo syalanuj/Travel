@@ -13,35 +13,35 @@ a:hover {
   color: #c96810;
   text-decoration: none;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-.text-hero {
-  font-family: 'Roboto', arial, helvetica, sans-serif;
-  margin-top: 0;
-  font-weight: 300;
-  color: #565656;
-  line-height: 1.3em;
-}
-h1.bolded,
-h2.bolded,
-h3.bolded,
-h4.bolded,
-h5.bolded,
-.text-hero.bolded {
-  font-weight: 400;
-}
-h1 b,
-h2 b,
-h3 b,
-h4 b,
-h5 b,
-.text-hero b {
-  font-weight: 300;
-  line-height: 1em;
-}
+/*h1,*/
+/*h2,*/
+/*h3,*/
+/*h4,*/
+/*h5,*/
+/*.text-hero {*/
+  /*font-family: 'Roboto', arial, helvetica, sans-serif;*/
+  /*margin-top: 0;*/
+  /*font-weight: 300;*/
+  /*color: #565656;*/
+  /*line-height: 1.3em;*/
+/*}*/
+/*h1.bolded,*/
+/*h2.bolded,*/
+/*h3.bolded,*/
+/*h4.bolded,*/
+/*h5.bolded,*/
+/*.text-hero.bolded {*/
+  /*font-weight: 400;*/
+/*}*/
+/*h1 b,*/
+/*h2 b,*/
+/*h3 b,*/
+/*h4 b,*/
+/*h5 b,*/
+/*.text-hero b {*/
+  /*font-weight: 300;*/
+  /*line-height: 1em;*/
+/*}*/
 h1 small,
 h2 small,
 h3 small,
@@ -54,19 +54,19 @@ h5 small,
 h1 {
   font-size: 51.98102000000001px;
 }
-h2 {
-  font-size: 39.985400000000006px;
-}
-h3 {
-  font-size: 30.758000000000003px;
-}
-h4 {
-  font-size: 23.66px;
-}
-h5 {
-  font-size: 18.2px;
-  font-weight: 300;
-}
+/*h2 {*/
+  /*font-size: 39.985400000000006px;*/
+/*}*/
+/*h3 {*/
+  /*font-size: 30.758000000000003px;*/
+/*}*/
+/*h4 {*/
+  /*font-size: 23.66px;*/
+/*}*/
+/*h5 {*/
+  /*font-size: 18.2px;*/
+  /*font-weight: 300;*/
+/*}*/
 * > small,
 small {
   color: #818181;

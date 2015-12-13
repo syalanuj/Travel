@@ -6,7 +6,6 @@
     function controller($scope, $cookies, $rootScope, $location, accountService) {
         //====== Scope Variables==========
         //================================
-
         $scope.userObj = JSON.parse(JSON.stringify(Parse.User.current()));
         $scope.userObj.id = $scope.userObj.objectId;
         $scope.details = function (details) {
@@ -26,6 +25,15 @@
         $scope.queuecomplete = 0;
         $scope.imageUploadDone = false;
         $scope.isPublishedClicked = false;
+
+        //Setting header
+        var header = $('header.home-img');
+        header.removeClass('home-img');
+        header.addClass('header-img');
+        $('.intro-wrap').hide();
+        $('.profile-wrap.hidden').removeClass('hidden');
+        /*-----------*/
+
         //Date functions
         $scope.status = {
             opened: false
