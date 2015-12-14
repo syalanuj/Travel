@@ -7,3 +7,30 @@
 .fb-comments, .fb-comments * {
     width:100% !important;
 }
+
+.top-background {
+    background: #AEB7B4 url('images/header-bg.jpg') no-repeat 0 0;
+    background-size: 100% 30%;
+}
+
+.trip-caption-top{
+    padding: 0.5em 20px;
+    background: rgba(0, 0, 0, 0);
+    color: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+.trip-preview .trip-details-new{
+        padding: .5em 12px 0;
+}
+
+.trip-preview .trip-caption-new{
+    padding: .5em 12px;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

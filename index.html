@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="css/dropzone.css">
         <!--Post Form-->
         <link rel="stylesheet" href="css/timeline/timestyle.css">
+        <link rel="stylesheet" href="css/timeline/style.css">
         <!--colorbox-->
         <link rel="stylesheet" type="text/css" href="css/colorbox.css" media="screen" />
         <!--Meta-->
@@ -103,110 +104,114 @@
         <title>Campture_V1</title>
     </head>
     <body>
-    <div ng-controller="HeaderCtrl">
+        <!--<div ng-controller="HeaderCtrl">
                 
-        <div id="fb-root"></div>
-        <div class="site-wrap">
-            <div class="header-wrap">
-                <div class="top-wrap">
-				    <div class="site-header container">
-					    <div class="header-logo left">
-						    <a href="#/"><img src="/img/icons/logo.png" alt=""></a>
-					    </div>
-					    <div class="header-options right clearfix">
-						    <nav class="header-menu left clearfix">
-							    <ul>								
-								    <li class=""><a href="/#/account/newsFeed/">News Feed</a></li>
-							    </ul>
-						    </nav>
-						    <div class="header-buttons clearfix">
-							    <a href="#" class="button opaque square menu mobile-visible-480">
-								    <span class="fa fa-bars"></span>
-								    <select name="page" class="element-select" data-change="redirect">
-									    <option value=""><a ng-href="/#/account/newsFeed/"></a>News Feed</option>
-								    </select>
-							    </a>
-							    <a ng-href="/#/account/signIn" ng-show="userObj == undefined" class="button opaque"><span class="mobile-hidden-320">Sign In</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
-							    <a ng-href="" ng-show="userObj" ng-click="logout()" class="button opaque"><span class="mobile-hidden-320">Sign Out</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
-							    <a ng-href="/#/account/profile/{{userObj.id}}" ng-show="userObj" class="button">My Trips</a>
-						    </div>
-					    </div>
-			    	</div>
-			    </div>
+            <div id="fb-root"></div>
+            <div class="site-wrap">
+                <div class="header-wrap">
+                    <div class="top-wrap">
+				        <div class="site-header container">
+					        <div class="header-logo left">
+						        <a href="#/"><img src="/img/icons/logo.png" alt=""></a>
+					        </div>
+					        <div class="header-options right clearfix">
+						        <nav class="header-menu left clearfix">
+							        <ul>								
+								        <li class=""><a href="/#/account/newsFeed/">News Feed</a></li>
+							        </ul>
+						        </nav>
+						        <div class="header-buttons clearfix">
+							        <a href="#" class="button opaque square menu mobile-visible-480">
+								        <span class="fa fa-bars"></span>
+								        <select name="page" class="element-select" data-change="redirect">
+									        <option value=""><a ng-href="/#/account/newsFeed/"></a>News Feed</option>
+								        </select>
+							        </a>
+							        <a ng-href="/#/account/signIn" ng-show="userObj == undefined" class="button opaque"><span class="mobile-hidden-320">Sign In</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
+							        <a ng-href="" ng-show="userObj" ng-click="logout()" class="button opaque"><span class="mobile-hidden-320">Sign Out</span><span class="mobile-visible-320"><span class="fa fa-sign-out square"></span></span></a>
+							        <a ng-href="/#/account/profile/{{userObj.id}}" ng-show="userObj" class="button">My Trips</a>
+						        </div>
+					        </div>
+			    	    </div>
+			        </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>-->
+        <header class="header">
+			<div ng-controller="HeaderCtrl" class="row top-bar no-margin" style="padding:0;">
+				<div class="container">
+					<a href ="#/" class="col-md-2 no-padding site-name">
+						campture
+					</a>
+					<div class="col-md-5">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="navbar-collapse collapse">
+							<ul class="nav navbar-nav navbar-left">
+								<li><a class="active" href="#">Explore</a></li>
+								<li><a href="#">Timeline</a></li>
+								<li><a href="#">Tags</a></li>
+								<li><a href="#">Profiles</a></li>
+							</ul>
+						</div>
+					</div>
+					
+					<div  class="col-md-2 myfeed">
+						<a ng-show="userObj" ng-href="#/account/profile/{{userObj.objectId}}"><img src="img/icons/myfeed.png" alt="My Feed"></a>
+					</div>
+
+					<div ng-show="userObj == undefined" class="col-md-3 profile">
+                        <a   ng-click ="loginWithFacebook()" class="button facebook"><span class="fa fa-facebook-square medium"></span> Sign in via Facebook</a>                        						
+					</div>
+                    <div ng-show="userObj" class="col-md-2 profile-new">
+                            <span class="profile-name-new">{{userObj.facebook_profile.name}}</span>
+						    <img class="profile-picture-new img-circle" ng-src="{{userObj.facebook_profile.picture.data.url}}" width="40" height="40" style="width: initial;">
+                        
+                    </div>
+				</div>
+			</div>
+		</header>
     <main>     
     <div ng-view></div>
     </main>
 
-  <footer id="main-footer">
-            <div class="container">
-                <div class="row row-wrap">
-                    <div class="col-md-3">
-                        <a class="logo" href="index.html">
-                            <img src="img/logo-invert.png" alt="Image Alternative text" title="Image Title" />
-                        </a>
-                        <p class="mb20">Booking, reviews and advices on hotels, resorts, flights, vacation rentals, travel packages, and lots more!</p>
-                        <ul class="list list-horizontal list-space">
-                            <li>
-                                <a class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-twitter box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-google-plus box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-linkedin box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                            <li>
-                                <a class="fa fa-pinterest box-icon-normal round animate-icon-bottom-to-top" href="#"></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h4>Newsletter</h4>
-                        <form>
-                            <label>Enter your E-mail Address</label>
-                            <input type="text" class="form-control">
-                            <p class="mt5"><small>*We Never Send Spam</small>
-                            </p>
-                            <input type="submit" class="btn btn-primary" value="Subscribe">
-                        </form>
-                    </div>
-                    <div class="col-md-2">
-                        <ul class="list list-footer">
-                            <li><a href="#">About US</a>
-                            </li>
-                            <li><a href="#">Press Centre</a>
-                            </li>
-                            <li><a href="#">Best Price Guarantee</a>
-                            </li>
-                            <li><a href="#">Travel News</a>
-                            </li>
-                            <li><a href="#">Jobs</a>
-                            </li>
-                            <li><a href="#">Privacy Policy</a>
-                            </li>
-                            <li><a href="#">Terms of Use</a>
-                            </li>
-                            <li><a href="#">Feedback</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4">
-                        <h4>Have Questions?</h4>
-                        <h4 class="text-color">+1-202-555-0173</h4>
-                        <h4><a href="#" class="text-color">support@traveler.com</a></h4>
-                        <p>24/7 Dedicated Customer Support</p>
-                    </div>
-
-                </div>
-            </div>
-        </footer>
+    <footer id="main-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3 footer-nav-worp-td">
+					<div class="col-sm-3 footer-nav-worp-td">
+						<h2>CAMPTURE</h2>
+					</div>
+				</div>
+					
+				<div class="col-sm-6 footer-nav-worp-menu">
+					<ul class="">
+						<li><a href="#">ABOUT US</a></li>
+						<li><a href="#">PIRVACY</a></li>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">CONTACT US</a></li>
+					</ul>
+				</div>
+					
+				<div class="col-sm-3 footer-nav-worp-social">
+					<ul class="">
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						<li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row" style="text-align:center;color:#fff;">
+				<small>© 2015 All rights reserved. CAMPTURE</small>
+			</div>
+		</div>
+	</footer>
         <script src="js/modernizr.js"></script>
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.js"></script>

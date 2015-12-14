@@ -1,6 +1,6 @@
 <div class="intro-wrap">
 	<div class="site-intro container">
-		<h1>Share your travel experience</h1>
+		<h1 style="color: white;">Share your travel experience</h1>
 		<p>Easily keep, publish and share travel itineraries, places and photos, join our travel community to discover travel ideas and get inspired.</p>
 		<a ng-show="userObj == undefined" ng-href="/#/account/signIn" class="button primary large"><img src="/img/icons/map.svg" alt=""> Publish Trip</a>
         <a ng-show="userObj" ng-href="#/account/postTrip" class="button primary large"><img src="/img/icons/map.svg" alt=""> Publish Trip</a>
@@ -33,19 +33,27 @@
                         <img ng-show="trip.main_image" ng-src="{{trip.main_image.image_url}}" class="fullwidth" style="display: block;">
 		                <img ng-show="trip.main_image === undefined" ng-src="{{trip.visited_places[0].images[0].image_url}}" class="fullwidth" style="display: block;">
                     </a>
+                    <div class="trip-caption-top">
+                        <span class="fa fa-map-marker"></span>
+				        {{trip.visited_places[0].location}}
+                    </div>
 		
-		            <div class="trip-caption">
-			            <div class="trip-location">
-				            <span class="fa fa-map-marker"></span>
-				            {{trip.visited_places[0].location}}
+		            <div class="trip-caption-new">
+			            <div class="trip-location" style="font-size: 1.85em;">
+				            {{trip.title}}
+                            <span class="fa fa-heart right"></span>
+                            <span class="right">{{trip.total_likes}}</span>
 			            </div>
+                        
 		            </div>
 	            </div>
 	        <div class="trip-footer">
-		        <h3 class="trip-title title"><a ng-href="#/account/timeline/{{trip.id}}">{{trip.title}}</a></h3>
-		        <div class="trip-details clearfix">
-			        <div class="trip-detail left">
+		        <div class="trip-details-new clearfix">
+			        <div class="trip-detail left" >
 				        <a ng-href="/account/profile/{{trip.user.id}}"><span class="fa fa-user"></span> {{trip.username}}</a>
+			        </div>
+                    <div class="trip-detail right" >
+				        {{trip.visited_places[0].date | date:"dd/MM/yyyy"}}
 			        </div>
 		        </div>
 	        </div>	

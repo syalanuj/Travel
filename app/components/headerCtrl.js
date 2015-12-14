@@ -10,7 +10,7 @@
         //$rootScope.travelStyles;
         //$rootScope.topStates;
         //$rootScope.activities;
-        $scope.userObj = Parse.User.current();
+        $scope.userObj = JSON.parse(JSON.stringify(Parse.User.current()));
 
         $rootScope.loginWithFacebook = function () {
             Parse.FacebookUtils.logIn(null, {
